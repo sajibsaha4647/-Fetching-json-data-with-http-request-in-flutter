@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+
+import 'Details.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -25,9 +27,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   var ResponData ;
-
   Future GetresData() async{
-    var url = Uri.parse('https://reqres.in/api/users/?page=2');
+    var url = Uri.parse('https://reqres.in/api/users?page=2');
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var decodedResponse = convert.jsonDecode(response.body);
@@ -61,6 +62,9 @@ class _HomePageState extends State<HomePage> {
                       return ListTile(
                         title: Text(ResponData[i]["first_name"]),
                         subtitle: Text(ResponData[i]["email"]),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Details(receiveData:ResponData[i])));
+                        },
                       );
                     }
                     ),
