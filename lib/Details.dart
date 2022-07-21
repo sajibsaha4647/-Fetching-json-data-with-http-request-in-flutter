@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 class Details extends StatefulWidget {
 
+
   var receiveData ;
   Details({ this.receiveData });
 
   @override
-  State<Details> createState() => _DetailsState(receiveData);
+  State<Details> createState() => _DetailsState();
 }
 
 class _DetailsState extends State<Details> {
-  var receiveData;
-  _DetailsState(receiveData);
+
+  @override
+  void initState() {
+    print(widget.receiveData.toString());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class _DetailsState extends State<Details> {
             body: Container(
               child: CircleAvatar(
                 radius: 50,
-                child: Image.network(receiveData["avatar"]),
+                child: Image.network(widget.receiveData["avatar"]),
               ),
             ),
     ));

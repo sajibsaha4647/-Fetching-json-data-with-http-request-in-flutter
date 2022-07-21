@@ -26,13 +26,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+
+  @override
+  void initState() {
+    print("init state");
+    GetresData();
+    super.initState();
+
+  }
+
+
   var ResponData ;
   Future GetresData() async{
     var url = Uri.parse('https://reqres.in/api/users?page=2');
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var decodedResponse = convert.jsonDecode(response.body);
-      ResponData = decodedResponse['data'];
+     setState(() {
+       ResponData = decodedResponse['data'];
+     });
       print(ResponData.length);
       print('Number of books about http: $ResponData');
     } else {
@@ -40,12 +52,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this.GetresData();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +70,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(ResponData[i]["first_name"]),
                         subtitle: Text(ResponData[i]["email"]),
                         onTap: (){
+                          print(ResponData[i]);
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Details(receiveData:ResponData[i])));
                         },
                       );
